@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Playlist;
 use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
@@ -35,7 +36,9 @@ class PlaylistController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('playlist.show', [
+            'user' => Playlist::findOrFail($id)
+        ]);
     }
 
     /**

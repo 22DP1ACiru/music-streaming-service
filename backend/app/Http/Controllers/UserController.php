@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -11,7 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -27,7 +28,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -35,7 +36,6 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
     }
 
     /**
@@ -51,7 +51,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**

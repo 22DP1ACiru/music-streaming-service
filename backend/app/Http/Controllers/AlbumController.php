@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Album;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller
@@ -35,7 +36,9 @@ class AlbumController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('album.show', [
+            'user' => Album::findOrFail($id)
+        ]);
     }
 
     /**

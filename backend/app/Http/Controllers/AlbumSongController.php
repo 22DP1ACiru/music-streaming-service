@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Song;
+use App\Models\AlbumSong;
 use Illuminate\Http\Request;
 
-class SongController extends Controller
+class AlbumSongController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -36,9 +36,7 @@ class SongController extends Controller
      */
     public function show(string $id)
     {
-        return view('song.show', [
-            'user' => Song::findOrFail($id)
-        ]);
+        //
     }
 
     /**
