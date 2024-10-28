@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Song;
+use App\Http\Resources\Song;
 use Illuminate\Http\Request;
 
 class SongController extends Controller
@@ -12,15 +12,9 @@ class SongController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $songs = Song::all();
+        
+        return Song::collection($songs);
     }
 
     /**
@@ -28,7 +22,9 @@ class SongController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $song = Song::create($request->all());
+
+        return response()->json($song, 201);
     }
 
     /**
@@ -36,17 +32,7 @@ class SongController extends Controller
      */
     public function show(string $id)
     {
-        return view('song.show', [
-            'user' => Song::findOrFail($id)
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return response()->json(Song::findOrFail($id));
     }
 
     /**
@@ -54,7 +40,10 @@ class SongController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $song = Song::findOrFail($id);
+        $song->update($request->all());
+
+        return response()->json($song);
     }
 
     /**
@@ -62,6 +51,9 @@ class SongController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $song = Song::findOrFail($id);
+        $song->delete();
+
+        return response()->json(['message' => 'Song deleted successfully']);
     }
 }

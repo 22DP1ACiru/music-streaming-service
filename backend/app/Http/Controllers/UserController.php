@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Resources\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,15 +12,9 @@ class UserController extends Controller
      */
     public function index()
     {
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $users = User::all();
+        
+        return User::collection($users);
     }
 
     /**
@@ -28,7 +22,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::create($request->all());
 
+        return response()->json($user, 201);
     }
 
     /**
@@ -36,14 +32,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return response()->json(User::findOrFail($id));
     }
 
     /**
@@ -51,7 +40,10 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = User::findOrFail($id);
+        $user->update($request->all());
 
+        return response()->json($user);
     }
 
     /**
@@ -59,6 +51,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json(['message' => 'User deleted successfully']);
     }
 }

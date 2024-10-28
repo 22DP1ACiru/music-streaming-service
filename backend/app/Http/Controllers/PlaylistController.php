@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Playlist;
+use App\Http\Resources\Playlist;
 use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
@@ -12,15 +12,9 @@ class PlaylistController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $playlists = Playlist::all();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Playlist::collection($playlists);
     }
 
     /**
@@ -28,7 +22,9 @@ class PlaylistController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $playlist = Playlist::create($request->all());
+
+        return response()->json($playlist, 201);
     }
 
     /**
@@ -36,17 +32,7 @@ class PlaylistController extends Controller
      */
     public function show(string $id)
     {
-        return view('playlist.show', [
-            'user' => Playlist::findOrFail($id)
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return response()->json(Playlist::findOrFail($id));
     }
 
     /**
@@ -54,7 +40,10 @@ class PlaylistController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $playlist = Playlist::findOrFail($id);
+        $playlist->update($request->all());
+
+        return response()->json($playlist);
     }
 
     /**
@@ -62,6 +51,9 @@ class PlaylistController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $playlist = Playlist::findOrFail($id);
+        $playlist->delete();
+
+        return response()->json(['message' => 'Playlist deleted successfully']);
     }
 }

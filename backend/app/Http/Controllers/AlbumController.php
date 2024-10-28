@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Album;
+use App\Http\Resources\Album;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller
@@ -12,15 +12,9 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $albums = Album::all();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Album::collection($albums);
     }
 
     /**
@@ -28,7 +22,9 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $album = Album::create($request->all());
+
+        return response()->json($album, 201);
     }
 
     /**
@@ -36,17 +32,7 @@ class AlbumController extends Controller
      */
     public function show(string $id)
     {
-        return view('album.show', [
-            'user' => Album::findOrFail($id)
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return response()->json(Album::findOrFail($id));
     }
 
     /**
@@ -54,7 +40,10 @@ class AlbumController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $album = Album::findOrFail($id);
+        $album->update($request->all());
+
+        return response()->json($album);
     }
 
     /**
@@ -62,6 +51,9 @@ class AlbumController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $album = Album::findOrFail($id);
+        $album->delete();
+
+        return response()->json(['message' => 'Album deleted successfully']);
     }
 }

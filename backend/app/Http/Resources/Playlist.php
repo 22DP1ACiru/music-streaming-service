@@ -14,6 +14,11 @@ class Playlist extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'owner' => $this->user_id,
+            'name' => $this->name,
+            'songs' => Song::collection($this->songs),
+        ];
     }
 }

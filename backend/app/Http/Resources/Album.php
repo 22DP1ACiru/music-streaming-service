@@ -15,7 +15,13 @@ class Album extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-
+            'id' => $this->id,
+            'artist' => $this->user_id,
+            'name' => $this->name,
+            'type' => $this->type,
+            'release_date' => $this->release_date,
+            'genre' => $this->genre,
+            'songs' => Song::collection($this->songs),
         ];
     }
 }
