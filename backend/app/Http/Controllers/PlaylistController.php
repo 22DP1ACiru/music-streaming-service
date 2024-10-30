@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Playlist;
+use App\Models\Playlist;
+use App\Http\Resources\PlaylistResource;
 use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
@@ -14,7 +15,7 @@ class PlaylistController extends Controller
     {
         $playlists = Playlist::all();
 
-        return Playlist::collection($playlists);
+        return PlaylistResource::collection($playlists);
     }
 
     /**
@@ -41,6 +42,10 @@ class PlaylistController extends Controller
     public function update(Request $request, string $id)
     {
         $playlist = Playlist::findOrFail($id);
+
+        if ($request->User()->id !== $playlist->owner) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
         $playlist->update($request->all());
 
         return response()->json($playlist);

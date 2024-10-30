@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Album;
+use App\Models\Album;
+use App\Http\Resources\AlbumResource;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller
@@ -14,7 +15,7 @@ class AlbumController extends Controller
     {
         $albums = Album::all();
 
-        return Album::collection($albums);
+        return AlbumResource::collection($albums);
     }
 
     /**
@@ -41,6 +42,10 @@ class AlbumController extends Controller
     public function update(Request $request, string $id)
     {
         $album = Album::findOrFail($id);
+
+        if ($request->User()->id !== $album->artist) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
         $album->update($request->all());
 
         return response()->json($album);
