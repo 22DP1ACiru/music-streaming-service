@@ -33,7 +33,7 @@ class PlaylistController extends Controller
      */
     public function show(string $id)
     {
-        return response()->json(Playlist::findOrFail($id));
+        return response()->json(PlaylistResource::findOrFail($id));
     }
 
     /**

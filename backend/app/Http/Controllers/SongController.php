@@ -48,7 +48,7 @@ class SongController extends Controller
      */
     public function show(string $id)
     {
-        return response()->json(Song::findOrFail($id));
+        return response()->json(SongResource::findOrFail($id));
     }
 
     /**
@@ -62,7 +62,7 @@ class SongController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $song->update($request->all());
+        $song->update($request->all()); 
 
         return response()->json($song);
     }

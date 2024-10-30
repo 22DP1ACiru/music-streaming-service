@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        return response()->json(User::findOrFail($id));
+        return response()->json(UserResource::findOrFail($id));
     }
 
     /**

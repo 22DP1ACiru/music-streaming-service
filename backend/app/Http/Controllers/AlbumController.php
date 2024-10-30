@@ -33,7 +33,7 @@ class AlbumController extends Controller
      */
     public function show(string $id)
     {
-        return response()->json(Album::findOrFail($id));
+        return response()->json(AlbumResource::findOrFail($id));
     }
 
     /**
